@@ -1,0 +1,79 @@
+#!/usr/bin/python
+# coding:utf8
+
+#求行列式的值
+from numpy import *
+import numpy as np
+import numpy
+def MatrixGetDet(M):
+    length = len(M)
+    if length ==2:
+        return M[0][0]*M[1][1]-M[0][1]*M[1][0]
+    import itertools
+    #sum positive
+    positive = 0
+    indexer1 = itertools.cycle(range(length))
+    indexer2 = itertools.cycle(range(length))
+    for index in range(length):
+        indexer1.next()
+        _tmp = 1
+        for index in range(length):
+            index1 = indexer1.next()
+            index2 = indexer2.next()
+            _tmp *=M[index1][index2]
+        positive += _tmp
+    #sum negative
+ negative = 0
+    indexer1 = itertools.cycle(range(length))
+    indexer2 = itertools.cycle(range(length)[::-1])
+    for index in range(length):
+        indexer1.next()
+        _tmp = 1
+        for index in range(length):
+            index1 = indexer1.next()
+            index2 = indexer2.next()
+            _tmp *= M[index1][index2]
+        negative += _tmp
+    #return
+    return positive - negative
+matrix1 = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9],
+]
+matrix2 = [
+    [1,2],
+    [4,5],
+]
+matrix3 = [
+   [1,0,1],
+    [0,1,0],
+    [1,0,1],
+]
+matrix4 = [
+    [1,2,3,4,5],
+    [2,3,4,5,1],
+    [3,4,5,1,2],
+    [4,5,1,2,3],
+    [5,1,2,3,4],
+]
+
+print MatrixGetDet(matrix1)
+print MatrixGetDet(matrix2)
+print MatrixGetDet(matrix3)
+print MatrixGetDet(matrix4)
+#求矩阵的三次方
+A = mat('1 0 1;2 0 2;3 0 3')
+AAA = A*A*A
+print "矩阵A的三次方：\n",AAA
+#求逆矩阵
+b1 = array([1,2,3])
+B= mat(b1)
+BB = B.I
+print "矩阵B的逆矩阵为B1：\n",BB
+#求矩阵的特征值和特征向量
+C = numpy.diag((1,2,3))
+print C
+a,b=numpy.linalg.eig(C)
+print "矩阵C的特征值为：",a
+print "矩阵C的特征向量为：\n",b
